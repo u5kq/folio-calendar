@@ -104,3 +104,176 @@ button:active{transform:scale(.98)}
   .page-intro{flex-wrap:wrap}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* folio. Calendar — iPhone-first visual system */
+:root{
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-smooth:cubic-bezier(.22,.75,.25,1);
+}
+html{scroll-behavior:smooth;overscroll-behavior-y:contain}
+body{min-height:100%;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #777;outline-offset:3px}
+@media(max-width:720px){
+  body{background:#fafafa}
+  .app-shell{display:block;min-height:100dvh}
+  .main{
+    width:100%;max-width:none;min-height:100dvh;margin:0;
+    padding:calc(16px + env(safe-area-inset-top)) 16px calc(106px + env(safe-area-inset-bottom));
+    background:#fafafa;
+  }
+  .topbar{display:flex;flex-direction:column;align-items:stretch;gap:18px;margin:0 0 25px}
+  .topbar-title{display:flex;align-items:center;gap:12px;min-width:0}
+  .mobile-menu{
+    display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;
+    border:1px solid #ededed;border-radius:14px;background:#fff;color:#222;font-size:17px;
+    box-shadow:0 2px 8px #00000006;
+  }
+  .topbar-title>div{min-width:0}
+  .eyebrow{font-size:9px;letter-spacing:1.6px;margin-bottom:5px}
+  .topbar h1{font-size:29px;line-height:1.12;letter-spacing:-1.1px;font-weight:650}
+  .top-actions{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;width:100%}
+  .search-button{height:44px;min-width:0;width:100%;padding:0 13px;border:1px solid #ececec;border-radius:13px;background:#fff;justify-content:flex-start;font-size:12px}
+  .search-button kbd{margin-left:auto}
+  .today-button{height:44px;padding:0 14px;border:1px solid #e9e9e9;border-radius:13px;background:#fff;font-size:11px}
+  .top-actions .primary-button{height:44px;padding:0 14px;border-radius:13px;font-size:11px;box-shadow:0 3px 9px #00000012}
+  .calendar-heading{display:flex;flex-direction:column;align-items:stretch;gap:14px;margin:0 0 13px}
+  .period-controls{display:grid;grid-template-columns:40px 40px minmax(0,1fr);align-items:center;gap:7px}
+  .round-button{width:40px;height:40px;border:1px solid #ededed;border-radius:12px;background:#fff;font-size:21px;color:#333}
+  .period-controls h2{margin:0 0 0 6px;font-size:20px;line-height:1.2;letter-spacing:-.5px}
+  .view-switch{display:grid;grid-template-columns:repeat(3,1fr);width:100%;gap:3px;padding:4px;border:1px solid #eee;border-radius:13px;background:#f0f0f0}
+  .view-switch button{min-height:39px;padding:8px 5px;border-radius:10px;font-size:11px}
+  .view-switch button.selected{background:#fff;box-shadow:0 1px 4px #0000000d;color:#171717}
+  .calendar-layout{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .calendar-panel,.agenda-panel,.focus-card,.task-list-card,.insight-panel,.settings-card{border:1px solid #ececec;border-radius:16px;background:#fff;box-shadow:0 2px 10px #00000004}
+  .calendar-panel{width:100%;overflow:hidden}
+  .weekday-row{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:13px 4px 10px;border-bottom:1px solid #f0f0f0}
+  .weekday-row span{font-size:10px;font-weight:600;color:#999;text-align:center}
+  .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+  .calendar-day{position:relative;min-width:0;min-height:66px;padding:7px 2px 5px;border-right:1px solid #f3f3f3;border-bottom:1px solid #f3f3f3;background:#fff}
+  .calendar-day:nth-child(7n){border-right:0}
+  .calendar-day:nth-last-child(-n+7){border-bottom:0}
+  .calendar-day.selected{background:#f7f7f7;box-shadow:inset 0 0 0 1px #c8c8c8}
+  .day-number{display:grid;place-items:center;width:27px;height:27px;margin:0 auto 5px;border:0;border-radius:50%;font-size:11px;color:#444}
+  .calendar-day.today .day-number{background:#171717;color:white;font-weight:600}
+  .calendar-day.outside .day-number{color:#ccc}
+  .event-chip{display:block;width:7px;height:5px;min-height:5px;margin:3px auto 0;padding:0;border:0;border-radius:8px;background:#333;font-size:0;color:transparent}
+  .event-chip.work{background:#888}.event-chip.other{background:#c3c3c3}
+  .more-events{padding:2px 0 0;text-align:center;font-size:8px;color:#888}
+  .agenda-panel{display:flex;flex-direction:column;min-height:0;width:100%;padding:17px 16px}
+  .agenda-head{display:flex;align-items:center;justify-content:space-between;padding:0 0 13px;border-bottom:1px solid #eee}
+  .agenda-head h3{font-size:18px;letter-spacing:-.4px}
+  .add-small{width:36px;height:36px;border:1px solid #ededed;border-radius:11px;background:#f7f7f7;font-size:20px}
+  .agenda-list{flex:initial}
+  .agenda-event{display:grid;grid-template-columns:54px 3px minmax(0,1fr);gap:11px;align-items:start;padding:14px 0;border-bottom:1px solid #f1f1f1}
+  .agenda-time{font-size:10px;color:#888;padding-top:2px}
+  .agenda-mark{height:34px;border-radius:4px}
+  .agenda-event strong{font-size:12px;line-height:1.45}
+  .agenda-event small{font-size:10px;line-height:1.5;color:#999}
+  .agenda-empty{padding:24px 8px;text-align:center;color:#999;font-size:11px;line-height:1.8}
+  .agenda-footer{display:flex;align-items:center;justify-content:space-between;padding-top:13px;font-size:11px;color:#888}
+  .agenda-footer button{font-size:11px}
+  .focus-section{margin-top:24px}
+  .section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+  .section-title h3{font-size:19px;line-height:1.3;letter-spacing:-.5px}
+  .section-title .subtle-link{font-size:11px;white-space:nowrap}
+  .focus-card{padding:16px}
+  .focus-progress{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#777}
+  .progress-track{height:5px;margin:11px 0 13px;border-radius:8px;background:#eee;overflow:hidden}
+  .progress-track i{display:block;height:100%;border-radius:8px;background:#222;transition:width .45s var(--ease-out)}
+  .focus-tasks{display:flex;flex-direction:column;align-items:stretch;gap:7px}
+  .focus-task{width:100%;max-width:none;min-width:0;padding:11px 12px;border:1px solid #eee;border-radius:11px;background:#fff;font-size:11px;text-align:left}
+  .page-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:5px 0 23px}
+  .page-intro h2{font-size:28px;line-height:1.15;letter-spacing:-.9px}
+  .page-intro p:not(.eyebrow){font-size:12px;line-height:1.6;color:#888}
+  .page-intro .primary-button{flex:0 0 auto}
+  .task-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:13px}
+  .filter-pills{display:flex;max-width:100%;padding:4px;border-radius:12px;background:#f0f0f0}
+  .filter-pills button{padding:8px 11px;border-radius:9px;font-size:10px}
+  .filter-pills button.selected{background:#fff;box-shadow:0 1px 4px #0000000b}
+  .task-list-card{padding:4px 15px}
+  .task-row{gap:11px;padding:15px 0}
+  .task-main{min-width:0}
+  .task-main button{font-size:12px;line-height:1.45}
+  .task-main small{font-size:10px;line-height:1.5;white-space:normal}
+  .priority{font-size:9px;white-space:nowrap}
+  .notes-grid{grid-template-columns:1fr;gap:11px}
+  .note-card{min-height:0;padding:17px;border-radius:15px}
+  .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .stat-card{min-width:0;padding:15px;border-radius:14px}
+  .stat-card strong{font-size:23px;overflow-wrap:anywhere}
+  .insight-panel,.settings-card{margin:12px 0;padding:17px}
+  .settings-actions{display:flex;flex-wrap:wrap;gap:8px}
+  .mobile-nav{
+    position:fixed;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    left:12px;right:12px;bottom:max(9px,env(safe-area-inset-bottom));z-index:30;
+    padding:7px 7px calc(7px + env(safe-area-inset-bottom));
+    border:1px solid #e9e9e9;border-radius:18px;background:rgba(255,255,255,.94);
+    box-shadow:0 8px 30px #00000012;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  }
+  .mobile-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:45px;padding:4px 2px;border:0;border-radius:12px;background:transparent;color:#888;font-size:9px}
+  .mobile-nav button span{font-size:18px;line-height:1}
+  .mobile-nav button.active{background:#f2f2f2;color:#171717;font-weight:600}
+  .sidebar{
+    position:fixed;top:0;bottom:0;left:0;z-index:60;width:min(310px,86vw);height:100dvh;
+    padding:calc(24px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));
+    border:0;border-right:1px solid #eee;background:#fff;box-shadow:12px 0 40px #00000012;
+    transform:translateX(-105%);transition:transform .38s var(--ease-out);overflow-y:auto;
+  }
+  .sidebar.open{transform:translateX(0)}
+  .sidebar.open::after{content:"";position:fixed;inset:0 -100vw 0 100%;background:#1116;z-index:-1}
+  .brand{font-size:22px}
+  .nav-item{min-height:44px;border-radius:11px;font-size:13px}
+  .mini-calendar{padding:17px 7px}
+  .side-calendars label{min-height:38px}
+  .toast{bottom:calc(82px + env(safe-area-inset-bottom));border-radius:12px}
+  .modal{
+    width:calc(100% - 24px);max-width:480px;max-height:min(86dvh,760px);margin:auto;
+    padding:21px 18px calc(18px + env(safe-area-inset-bottom));border:1px solid #eee;border-radius:20px;
+    box-shadow:0 18px 60px #00000020;overflow-y:auto;
+  }
+  .modal::backdrop{background:#1117;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+  .modal form{display:flex;flex-direction:column;gap:14px}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px}
+  .modal-head h2{font-size:21px;letter-spacing:-.5px}
+  .close-button{width:36px;height:36px;border:0;border-radius:50%;background:#f2f2f2;font-size:22px}
+  .field{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#777}
+  .field input,.field select,.field textarea,.search-input{
+    width:100%;min-height:44px;padding:11px 12px;border:1px solid #e7e7e7;border-radius:11px;background:#fafafa;color:#171717;font-size:13px;
+  }
+  .field textarea{min-height:90px;resize:vertical}
+  .field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .modal-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin-top:7px}
+  .modal-actions .primary-button,.modal-actions .secondary-button{min-height:42px;border-radius:11px}
+  .search-modal{align-self:start;margin-top:calc(12vh + env(safe-area-inset-top))}
+  .search-results{max-height:55dvh;overflow:auto}
+}
+@media(max-width:390px){
+  .main{padding-left:13px;padding-right:13px}
+  .top-actions{grid-template-columns:minmax(0,1fr) auto}
+  .search-button{grid-column:1/-1}
+  .today-button{grid-column:1;grid-row:2}
+  .top-actions .primary-button{grid-column:2;grid-row:2}
+  .calendar-day{min-height:59px}
+  .day-number{width:24px;height:24px}
+  .page-intro{flex-wrap:wrap}
+  .field-grid{grid-template-columns:1fr}
+}
+@media(hover:hover) and (pointer:fine){
+  button:hover{filter:brightness(.97)}
+}
+@media(prefers-reduced-motion:no-preference){
+  .view:not(.hidden){animation:folioPageIn .3s var(--ease-out) both}
+  .calendar-panel,.agenda-panel,.focus-card{animation:folioCardIn .38s var(--ease-out) both}
+  .agenda-panel{animation-delay:.035s}
+  .focus-card{animation-delay:.07s}
+  .modal[open]{animation:folioModalIn .28s var(--ease-out) both}
+  .calendar-day{transition:background-color .18s ease,box-shadow .18s ease}
+  .mobile-nav button,.nav-item,.primary-button,.round-button,.today-button,.add-small{transition:all .2s var(--ease-out)}
+}
+@keyframes folioPageIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes folioCardIn{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes folioModalIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
