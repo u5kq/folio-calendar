@@ -14,35 +14,35 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar" id="sidebar" aria-label="Main menu">
+    <aside class="sidebar" id="sidebar" aria-label="メインメニュー">
       <a class="brand" href="#" aria-label="folio.calendar home">
         <span class="brand-mark">f.</span>
         <span>folio<span class="brand-dot">.</span>calendar</span>
       </a>
 
       <button class="new-button" id="newEventSide" type="button">
-        <span aria-hidden="true">＋</span> Create event
+        <span aria-hidden="true">＋</span> 予定を作成
       </button>
 
-      <nav class="nav-group" aria-label="Workspace">
-        <p class="nav-caption">WORKSPACE</p>
+      <nav class="nav-group" aria-label="仕事space">
+        <p class="nav-caption">メニュー</p>
         <button class="nav-item active" type="button" data-view="calendar" aria-current="page">
-          <span class="nav-symbol" aria-hidden="true">▦</span><span>Calendar</span>
+          <span class="nav-symbol" aria-hidden="true">▦</span><span>分類</span>
         </button>
         <button class="nav-item" type="button" data-view="tasks">
-          <span class="nav-symbol" aria-hidden="true">☑</span><span>Tasks</span><span class="nav-count" id="taskCount">0</span>
+          <span class="nav-symbol" aria-hidden="true">☑</span><span>タスク</span><span class="nav-count" id="taskCount">0</span>
         </button>
         <button class="nav-item" type="button" data-view="notes">
-          <span class="nav-symbol" aria-hidden="true">▤</span><span>Notes</span>
+          <span class="nav-symbol" aria-hidden="true">▤</span><span>メモ</span>
         </button>
         <button class="nav-item" type="button" data-view="insights">
-          <span class="nav-symbol" aria-hidden="true">◫</span><span>Insights</span>
+          <span class="nav-symbol" aria-hidden="true">◫</span><span>分析</span>
         </button>
       </nav>
 
-      <section class="mini-calendar" aria-label="Mini calendar">
+      <section class="mini-calendar" aria-label="ミニカレンダー">
         <div class="mini-head">
-          <strong id="miniMonth"></strong>
+          <strong id="mini月"></strong>
           <span>
             <button id="miniPrev" type="button" aria-label="Previous month">‹</button>
             <button id="miniNext" type="button" aria-label="Next month">›</button>
@@ -51,80 +51,80 @@
         <div class="mini-week" aria-hidden="true">
           <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
         </div>
-        <div class="mini-days" id="miniDays"></div>
+        <div class="mini-days" id="mini日s"></div>
       </section>
 
-      <section class="side-calendars" aria-label="Calendar filters">
-        <p class="nav-caption">CALENDARS</p>
-        <label><input type="checkbox" checked data-category="Personal"><i class="cat-dot personal"></i>Personal</label>
-        <label><input type="checkbox" checked data-category="Work"><i class="cat-dot work"></i>Work</label>
-        <label><input type="checkbox" checked data-category="Other"><i class="cat-dot other"></i>Other</label>
+      <section class="side-calendars" aria-label="分類 filters">
+        <p class="nav-caption">カレンダー分類</p>
+        <label><input type="checkbox" checked data-category="プライベート"><i class="cat-dot personal"></i>プライベート</label>
+        <label><input type="checkbox" checked data-category="仕事"><i class="cat-dot work"></i>仕事</label>
+        <label><input type="checkbox" checked data-category="その他"><i class="cat-dot other"></i>その他</label>
       </section>
 
       <div class="sidebar-foot">
         <span class="sync-dot" aria-hidden="true"></span>
-        <span>Saved on this device</span>
-        <button id="settingsButton" type="button" aria-label="Settings">⚙</button>
+        <span>この端末に保存中</span>
+        <button id="settingsButton" type="button" aria-label="設定">⚙</button>
       </div>
     </aside>
 
     <main class="main" id="mainContent">
       <header class="topbar">
         <div class="topbar-title">
-          <button class="mobile-menu" id="menuButton" type="button" aria-label="Open menu">☰</button>
+          <button class="mobile-menu" id="menuButton" type="button" aria-label="メニューを開く">☰</button>
           <div>
-            <p class="eyebrow" id="todayLabel">YOUR SPACE</p>
-            <h1 id="pageTitle">Calendar</h1>
+            <p class="eyebrow" id="todayLabel">あなたのスペース</p>
+            <h1 id="pageタイトル">分類</h1>
           </div>
         </div>
         <div class="top-actions">
-          <button class="search-button" id="searchButton" type="button" aria-label="Search">
-            <span aria-hidden="true">⌕</span><span class="search-hint">Search</span><kbd>⌘ K</kbd>
+          <button class="search-button" id="searchButton" type="button" aria-label="検索">
+            <span aria-hidden="true">⌕</span><span class="search-hint">検索</span><kbd>⌘ K</kbd>
           </button>
-          <button class="today-button" id="todayButton" type="button">Today</button>
-          <button class="primary-button" id="newEventButton" type="button">＋ <span>New event</span></button>
+          <button class="today-button" id="todayButton" type="button">今日</button>
+          <button class="primary-button" id="newEventButton" type="button">＋ <span>新しい予定</span></button>
         </div>
       </header>
 
-      <section id="calendarView" class="view" aria-label="Calendar view">
+      <section id="calendarView" class="view" aria-label="分類 view">
         <div class="calendar-heading">
           <div class="period-controls">
-            <button class="round-button" id="prevPeriod" type="button" aria-label="Previous period">‹</button>
-            <button class="round-button" id="nextPeriod" type="button" aria-label="Next period">›</button>
+            <button class="round-button" id="prevPeriod" type="button" aria-label="前の期間">‹</button>
+            <button class="round-button" id="nextPeriod" type="button" aria-label="次の期間">›</button>
             <h2 id="periodLabel" aria-live="polite"></h2>
           </div>
-          <div class="view-switch" role="group" aria-label="Calendar display">
-            <button class="selected" type="button" data-mode="month" aria-pressed="true">Month</button>
-            <button type="button" data-mode="week" aria-pressed="false">Week</button>
-            <button type="button" data-mode="day" aria-pressed="false">Day</button>
+          <div class="view-switch" role="group" aria-label="分類 display">
+            <button class="selected" type="button" data-mode="month" aria-pressed="true">月</button>
+            <button type="button" data-mode="week" aria-pressed="false">週</button>
+            <button type="button" data-mode="day" aria-pressed="false">日</button>
           </div>
         </div>
 
         <div class="calendar-layout">
-          <section class="calendar-panel" aria-label="Calendar dates">
+          <section class="calendar-panel" aria-label="分類 dates">
             <div class="weekday-row" id="weekdayRow">
               <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
             </div>
             <div class="calendar-grid" id="calendarGrid" aria-live="polite"></div>
           </section>
 
-          <aside class="agenda-panel" aria-label="Selected day's agenda">
+          <aside class="agenda-panel" aria-label="選択日の予定">
             <div class="agenda-head">
-              <div><p class="eyebrow">YOUR DAY</p><h3 id="agendaDate">Today</h3></div>
-              <button class="add-small" id="quickAdd" type="button" aria-label="Add event">＋</button>
+              <div><p class="eyebrow">今日の予定</p><h3 id="agenda日付">今日</h3></div>
+              <button class="add-small" id="quickAdd" type="button" aria-label="予定を追加">＋</button>
             </div>
             <div id="agendaList" class="agenda-list"></div>
             <div class="agenda-footer">
-              <span id="agendaCount">0 events</span>
-              <button id="agendaAll" type="button">View day →</button>
+              <span id="agendaCount">予定はありません</span>
+              <button id="agendaすべて" type="button">日表示 →</button>
             </div>
           </aside>
         </div>
 
         <section class="focus-section" aria-labelledby="focusHeading">
           <div class="section-title">
-            <div><p class="eyebrow">STAY ON TRACK</p><h3 id="focusHeading">Tasks to focus on</h3></div>
-            <button class="subtle-link" type="button" data-goto="tasks">All tasks →</button>
+            <div><p class="eyebrow">やることを整理</p><h3 id="focusHeading">タスク to focus on</h3></div>
+            <button class="subtle-link" type="button" data-goto="tasks">すべてのタスク →</button>
           </div>
           <div class="focus-card">
             <div class="focus-progress">
@@ -132,137 +132,137 @@
               <span id="focusPercent">0%</span>
             </div>
             <div class="progress-track" aria-hidden="true"><i id="focusProgress"></i></div>
-            <div id="focusTasks" class="focus-tasks"></div>
+            <div id="focusタスク" class="focus-tasks"></div>
           </div>
         </section>
       </section>
 
-      <section id="tasksView" class="view hidden" aria-label="Tasks">
+      <section id="tasksView" class="view hidden" aria-label="タスク">
         <div class="page-intro">
-          <div><p class="eyebrow">MAKE ROOM FOR WHAT MATTERS</p><h2>Your tasks</h2><p>Keep the next step clear.</p></div>
-          <button class="primary-button" id="newTaskButton" type="button">＋ <span>New task</span></button>
+          <div><p class="eyebrow">やるべきことを明確に</p><h2>タスク一覧</h2><p>次にやることを整理しましょう。</p></div>
+          <button class="primary-button" id="newタスク名Button" type="button">＋ <span>新しいタスク</span></button>
         </div>
         <div class="task-toolbar">
-          <div class="filter-pills" role="group" aria-label="Filter tasks">
-            <button class="selected" type="button" data-filter="all">All</button>
-            <button type="button" data-filter="active">To do</button>
-            <button type="button" data-filter="done">Completed</button>
+          <div class="filter-pills" role="group" aria-label="タスクを絞り込む">
+            <button class="selected" type="button" data-filter="all">すべて</button>
+            <button type="button" data-filter="active">未完了</button>
+            <button type="button" data-filter="done">完了</button>
           </div>
           <span id="taskSummary"></span>
         </div>
         <div class="task-list-card" id="taskList"></div>
       </section>
 
-      <section id="notesView" class="view hidden" aria-label="Notes">
+      <section id="notesView" class="view hidden" aria-label="メモ">
         <div class="page-intro">
-          <div><p class="eyebrow">THOUGHTS, IN ONE PLACE</p><h2>Your notes</h2><p>A space to collect the details.</p></div>
-          <button class="primary-button" id="newNoteButton" type="button">＋ <span>New note</span></button>
+          <div><p class="eyebrow">思考をひとつに</p><h2>メモ一覧</h2><p>アイデアや記録を残しましょう。</p></div>
+          <button class="primary-button" id="newメモ内容Button" type="button">＋ <span>新しいメモ</span></button>
         </div>
         <div id="notesList" class="notes-grid"></div>
       </section>
 
-      <section id="insightsView" class="view hidden" aria-label="Insights">
+      <section id="insightsView" class="view hidden" aria-label="分析">
         <div class="page-intro">
-          <div><p class="eyebrow">A CLEARER PICTURE</p><h2>Your insights</h2><p>A simple overview of your time.</p></div>
+          <div><p class="eyebrow">活動の振り返り</p><h2>利用状況</h2><p>予定とタスクの状況を確認できます。</p></div>
         </div>
         <div class="stats-grid" id="statsGrid"></div>
-        <section class="insight-panel"><h3>Next 7 days</h3><div id="weekChart" class="week-chart"></div></section>
-        <section class="insight-panel"><h3>Task progress</h3><div id="taskInsight"></div></section>
+        <section class="insight-panel"><h3>今後7日間</h3><div id="weekChart" class="week-chart"></div></section>
+        <section class="insight-panel"><h3>タスクの進捗</h3><div id="taskInsight"></div></section>
       </section>
 
-      <section id="settingsView" class="view hidden" aria-label="Settings">
+      <section id="settingsView" class="view hidden" aria-label="設定">
         <div class="page-intro">
-          <div><p class="eyebrow">YOUR SPACE, YOUR RULES</p><h2>Settings</h2><p>Manage your preferences and data.</p></div>
+          <div><p class="eyebrow">あなたのスペース, YOUR RULES</p><h2>設定</h2><p>表示やデータを管理します。</p></div>
         </div>
         <section class="settings-card">
-          <h3>Data &amp; backup</h3>
-          <p>Your calendar is stored in this browser. Export a backup before switching devices or clearing browser data.</p>
+          <h3>データとバックアップ</h3>
+          <p>予定やタスクはこのブラウザに保存されます。端末の変更やブラウザデータの削除前にバックアップしてください。</p>
           <div class="settings-actions">
-            <button class="secondary-button" id="exportData" type="button">↓ Export backup</button>
-            <label class="secondary-button import-label">↑ Import backup<input type="file" id="importData" accept="application/json" hidden></label>
+            <button class="secondary-button" id="exportData" type="button">↓ バックアップを書き出す</button>
+            <label class="secondary-button import-label">↑ バックアップを読み込む<input type="file" id="importData" accept="application/json" hidden></label>
           </div>
-          <small id="dataStatus">No cloud sync is connected.</small>
+          <small id="dataStatus">クラウド同期は設定されていません。</small>
         </section>
         <section class="settings-card">
-          <h3>Preferences</h3>
-          <label class="preference-row" for="weekStart">Week starts on
-            <select id="weekStart"><option value="0">Sunday</option><option value="1">Monday</option></select>
+          <h3>表示設定</h3>
+          <label class="preference-row" for="weekStart">週 starts on
+            <select id="weekStart"><option value="0">日曜日</option><option value="1">月曜日</option></select>
           </label>
         </section>
       </section>
     </main>
   </div>
 
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <button class="active" type="button" data-view="calendar"><span aria-hidden="true">▦</span>Calendar</button>
-    <button type="button" data-view="tasks"><span aria-hidden="true">☑</span>Tasks</button>
-    <button type="button" data-view="notes"><span aria-hidden="true">▤</span>Notes</button>
-    <button type="button" data-view="insights"><span aria-hidden="true">◫</span>Insights</button>
+  <nav class="mobile-nav" aria-label="下部メニュー">
+    <button class="active" type="button" data-view="calendar"><span aria-hidden="true">▦</span>分類</button>
+    <button type="button" data-view="tasks"><span aria-hidden="true">☑</span>タスク</button>
+    <button type="button" data-view="notes"><span aria-hidden="true">▤</span>メモ</button>
+    <button type="button" data-view="insights"><span aria-hidden="true">◫</span>分析</button>
   </nav>
 
-  <dialog id="eventDialog" class="modal" aria-labelledby="eventDialogTitle">
+  <dialog id="eventDialog" class="modal" aria-labelledby="eventDialogタイトル">
     <form id="eventForm">
       <div class="modal-head">
-        <div><p class="eyebrow">PLAN YOUR TIME</p><h2 id="eventDialogTitle">New event</h2></div>
+        <div><p class="eyebrow">予定を登録</p><h2 id="eventDialogタイトル">新しい予定</h2></div>
         <button type="button" class="close-button" data-close="eventDialog" aria-label="Close">×</button>
       </div>
-      <label class="field">Event title<input id="eventTitle" placeholder="What are you planning?" maxlength="100" required></label>
+      <label class="field">予定名<input id="eventタイトル" placeholder="予定を入力してください" maxlength="100" required></label>
       <div class="field-grid">
-        <label class="field">Date<input id="eventDate" type="date" required></label>
-        <label class="field">Calendar<select id="eventCategory"><option>Personal</option><option>Work</option><option>Other</option></select></label>
-        <label class="field">Starts<input id="eventTime" type="time" value="09:00"></label>
-        <label class="field">Ends<input id="eventEndTime" type="time" value="10:00"></label>
+        <label class="field">日付<input id="event日付" type="date" required></label>
+        <label class="field">分類<select id="eventCategory"><option>プライベート</option><option>仕事</option><option>その他</option></select></label>
+        <label class="field">開始時刻<input id="eventTime" type="time" value="09:00"></label>
+        <label class="field">終了時刻<input id="eventEndTime" type="time" value="10:00"></label>
       </div>
-      <label class="field">Location<input id="eventLocation" placeholder="Add a location (optional)" maxlength="120"></label>
-      <label class="field">Notes<textarea id="eventNotes" rows="3" placeholder="Anything else to remember?"></textarea></label>
+      <label class="field">場所<input id="event場所" placeholder="場所を入力（任意）" maxlength="120"></label>
+      <label class="field">メモ<textarea id="eventメモ" rows="3" placeholder="補足があれば入力してください"></textarea></label>
       <div class="modal-actions">
-        <button type="button" class="text-button danger hidden" id="deleteEvent">Delete event</button>
-        <button type="button" class="secondary-button" data-close="eventDialog">Cancel</button>
-        <button class="primary-button" type="submit">Save event</button>
+        <button type="button" class="text-button danger hidden" id="deleteEvent">予定を削除</button>
+        <button type="button" class="secondary-button" data-close="eventDialog">キャンセル</button>
+        <button class="primary-button" type="submit">予定を保存</button>
       </div>
     </form>
   </dialog>
 
-  <dialog id="taskDialog" class="modal" aria-labelledby="taskDialogTitle">
+  <dialog id="taskDialog" class="modal" aria-labelledby="taskDialogタイトル">
     <form id="taskForm">
       <div class="modal-head">
-        <div><p class="eyebrow">ONE STEP AT A TIME</p><h2 id="taskDialogTitle">New task</h2></div>
+        <div><p class="eyebrow">一歩ずつ進める</p><h2 id="taskDialogタイトル">新しいタスク</h2></div>
         <button type="button" class="close-button" data-close="taskDialog" aria-label="Close">×</button>
       </div>
-      <label class="field">Task<input id="taskTitle" placeholder="What needs to get done?" maxlength="120" required></label>
+      <label class="field">タスク名<input id="taskタイトル" placeholder="やることを入力してください" maxlength="120" required></label>
       <div class="field-grid">
-        <label class="field">Due date<input id="taskDate" type="date"></label>
-        <label class="field">Priority<select id="taskPriority"><option value="normal">Normal</option><option value="high">High</option><option value="low">Low</option></select></label>
+        <label class="field">期限<input id="task日付" type="date"></label>
+        <label class="field">優先度<select id="task優先度"><option value="normal">通常</option><option value="high">高</option><option value="low">低</option></select></label>
       </div>
-      <label class="field">Details<textarea id="taskDetails" rows="3"></textarea></label>
+      <label class="field">詳細<textarea id="task詳細" rows="3"></textarea></label>
       <div class="modal-actions">
-        <button type="button" class="secondary-button" data-close="taskDialog">Cancel</button>
-        <button class="primary-button" type="submit">Save task</button>
+        <button type="button" class="secondary-button" data-close="taskDialog">キャンセル</button>
+        <button class="primary-button" type="submit">タスクを保存</button>
       </div>
     </form>
   </dialog>
 
-  <dialog id="noteDialog" class="modal" aria-labelledby="noteDialogTitle">
+  <dialog id="noteDialog" class="modal" aria-labelledby="noteDialogタイトル">
     <form id="noteForm">
       <div class="modal-head">
-        <h2 id="noteDialogTitle">New note</h2>
+        <h2 id="noteDialogタイトル">新しいメモ</h2>
         <button type="button" class="close-button" data-close="noteDialog" aria-label="Close">×</button>
       </div>
-      <label class="field">Title<input id="noteTitle" required></label>
-      <label class="field">Note<textarea id="noteBody" rows="7" required></textarea></label>
+      <label class="field">タイトル<input id="noteタイトル" required></label>
+      <label class="field">メモ内容<textarea id="noteBody" rows="7" required></textarea></label>
       <div class="modal-actions">
-        <button type="button" class="secondary-button" data-close="noteDialog">Cancel</button>
-        <button class="primary-button" type="submit">Save note</button>
+        <button type="button" class="secondary-button" data-close="noteDialog">キャンセル</button>
+        <button class="primary-button" type="submit">メモを保存</button>
       </div>
     </form>
   </dialog>
 
-  <dialog id="searchDialog" class="modal search-modal" aria-labelledby="searchDialogTitle">
+  <dialog id="searchDialog" class="modal search-modal" aria-labelledby="searchDialogタイトル">
     <div class="modal-head">
-      <h2 id="searchDialogTitle">Search</h2>
+      <h2 id="searchDialogタイトル">検索</h2>
       <button type="button" class="close-button" data-close="searchDialog" aria-label="Close">×</button>
     </div>
-    <input id="searchInput" class="search-input" placeholder="Search events, tasks and notes…" autocomplete="off">
+    <input id="searchInput" class="search-input" placeholder="検索 events, tasks and notes…" autocomplete="off">
     <div id="searchResults" class="search-results"></div>
   </dialog>
 
