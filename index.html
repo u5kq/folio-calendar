@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f5">
+  <meta name="description" content="A modern calendar and productivity app by folio.">
+  <title>Calendar — folio.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="folio Calendar home"><span class="brand-mark">f.</span><span>folio<span class="brand-dot">.</span></span></a>
+      <button class="today-mini" id="todayButton">Today</button>
+      <div class="side-section">
+        <p class="side-label">WORKSPACE</p>
+        <button class="nav-item active" data-view="calendar"><span class="nav-icon">▦</span> Calendar</button>
+        <button class="nav-item" data-view="tasks"><span class="nav-icon">✓</span> Tasks <span class="nav-count" id="taskCount">0</span></button>
+      </div>
+      <div class="side-section">
+        <p class="side-label">YOUR CALENDARS</p>
+        <label class="calendar-filter"><input type="checkbox" checked data-category="Personal"><i class="dot dot-violet"></i> Personal</label>
+        <label class="calendar-filter"><input type="checkbox" checked data-category="Work"><i class="dot dot-blue"></i> Work</label>
+        <label class="calendar-filter"><input type="checkbox" checked data-category="Other"><i class="dot dot-orange"></i> Other</label>
+      </div>
+      <div class="sidebar-bottom"><span class="status-dot"></span> Your space, in sync <span class="version">v1.0.0</span></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button mobile-menu" id="menuButton" aria-label="Open menu">☰</button>
+          <div><p class="eyebrow">YOUR TIME, IN FOCUS</p><h1 id="pageTitle">Calendar</h1></div>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-button" id="searchButton" aria-label="Search">⌕</button>
+          <button class="avatar" aria-label="Profile">U</button>
+          <button class="primary-button" id="addEventButton"><span>＋</span> New event</button>
+        </div>
+      </header>
+
+      <section class="calendar-view" id="calendarView">
+        <div class="calendar-toolbar">
+          <div class="month-controls"><button class="arrow-button" id="prevMonth" aria-label="Previous month">‹</button><button class="arrow-button" id="nextMonth" aria-label="Next month">›</button><h2 id="monthLabel"></h2><button class="today-button" id="toolbarToday">Today</button></div>
+          <div class="view-switch"><button class="selected">Month</button><button disabled title="Coming soon">Week</button><button disabled title="Coming soon">Day</button></div>
+        </div>
+        <div class="calendar-card">
+          <div class="weekday-row"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+        <section class="upcoming-section">
+          <div class="section-heading"><div><p class="eyebrow">A LITTLE FURTHER AHEAD</p><h3>Upcoming</h3></div><span id="upcomingRange"></span></div>
+          <div id="upcomingList" class="upcoming-list"></div>
+        </section>
+      </section>
+
+      <section class="tasks-view hidden" id="tasksView">
+        <div class="section-heading task-heading"><div><p class="eyebrow">MAKE SPACE FOR WHAT MATTERS</p><h2>Your tasks</h2><p class="muted">A clear list for a clearer mind.</p></div><button class="primary-button" id="addTaskButton">＋ New task</button></div>
+        <div class="task-card" id="taskList"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="eventDialog" class="modal">
+    <form id="eventForm">
+      <div class="modal-heading"><div><p class="eyebrow">MAKE IT HAPPEN</p><h2 id="eventDialogTitle">New event</h2></div><button type="button" class="close-button" data-close="eventDialog">×</button></div>
+      <label class="field-label">Event title<input id="eventTitle" maxlength="80" required placeholder="What’s happening?"></label>
+      <div class="field-row"><label class="field-label">Date<input id="eventDate" type="date" required></label><label class="field-label">Time<input id="eventTime" type="time" value="09:00"></label></div>
+      <label class="field-label">Calendar<select id="eventCategory"><option>Personal</option><option>Work</option><option>Other</option></select></label>
+      <label class="field-label">Notes<textarea id="eventNotes" rows="3" placeholder="Add a note (optional)"></textarea></label>
+      <div class="modal-actions"><button type="button" class="text-button danger hidden" id="deleteEventButton">Delete event</button><button type="button" class="secondary-button" data-close="eventDialog">Cancel</button><button class="primary-button" type="submit">Save event</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="taskDialog" class="modal">
+    <form id="taskForm">
+      <div class="modal-heading"><div><p class="eyebrow">ONE STEP AT A TIME</p><h2>New task</h2></div><button type="button" class="close-button" data-close="taskDialog">×</button></div>
+      <label class="field-label">Task<input id="taskTitle" maxlength="100" required placeholder="What needs to get done?"></label>
+      <label class="field-label">Due date<input id="taskDate" type="date"></label>
+      <div class="modal-actions"><button type="button" class="secondary-button" data-close="taskDialog">Cancel</button><button class="primary-button" type="submit">Add task</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="searchDialog" class="modal search-modal">
+    <form method="dialog"><div class="modal-heading"><h2>Search</h2><button class="close-button">×</button></div><input id="searchInput" class="search-input" placeholder="Search events and tasks…" autocomplete="off"><div id="searchResults" class="search-results"></div></form>
+  </dialog>
+  <footer class="mobile-footer">Designed with intention by <strong>folio.</strong></footer>
+</body>
+</html>
