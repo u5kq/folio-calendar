@@ -1,271 +1,67 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="予定・タスク・メモをひとつに。シンプルで使いやすいカレンダーアプリ。">
-  <title>folio.calendar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f7f5">
+<meta name="description" content="予定・タスク・メモをひとつに。folio.calendar">
+<title>folio.calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar" aria-label="メインメニュー">
-      <a class="brand" href="#" aria-label="folio.calendar home">
-        <span class="brand-mark">f.</span>
-        <span>folio<span class="brand-dot">.</span>calendar</span>
-      </a>
-
-      <button class="new-button" id="newEventSide" type="button">
-        <span aria-hidden="true">＋</span> 予定を作成
-      </button>
-
-      <nav class="nav-group" aria-label="メインメニュー">
-        <p class="nav-caption">メニュー</p>
-        <button class="nav-item active" type="button" data-view="calendar" aria-current="page">
-          <span class="nav-symbol" aria-hidden="true">▦</span><span>分類</span>
-        </button>
-        <button class="nav-item" type="button" data-view="tasks">
-          <span class="nav-symbol" aria-hidden="true">☑</span><span>タスク</span><span class="nav-count" id="taskCount">0</span>
-        </button>
-        <button class="nav-item" type="button" data-view="notes">
-          <span class="nav-symbol" aria-hidden="true">▤</span><span>メモ</span>
-        </button>
-        <button class="nav-item" type="button" data-view="insights">
-          <span class="nav-symbol" aria-hidden="true">◫</span><span>分析</span>
-        </button>
-      </nav>
-
-      <section class="mini-calendar" aria-label="ミニカレンダー">
-        <div class="mini-head">
-          <strong id="miniMonth"></strong>
-          <span>
-            <button id="miniPrev" type="button" aria-label="前の月">‹</button>
-            <button id="miniNext" type="button" aria-label="次の月">›</button>
-          </span>
-        </div>
-        <div class="mini-week" aria-hidden="true">
-          <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
-        </div>
-        <div class="mini-days" id="miniDays"></div>
-      </section>
-
-      <section class="side-calendars" aria-label="カレンダー分類">
-        <p class="nav-caption">カレンダー分類</p>
-        <label><input type="checkbox" checked data-category="プライベート"><i class="cat-dot personal"></i>プライベート</label>
-        <label><input type="checkbox" checked data-category="仕事"><i class="cat-dot work"></i>仕事</label>
-        <label><input type="checkbox" checked data-category="その他"><i class="cat-dot other"></i>その他</label>
-      </section>
-
-      <div class="sidebar-foot">
-        <span class="sync-dot" aria-hidden="true"></span>
-        <span>この端末に保存中</span>
-        <button id="settingsButton" type="button" aria-label="設定">⚙</button>
-      </div>
-    </aside>
-
-    <main class="main" id="mainContent">
-      <header class="topbar">
-        <div class="topbar-title">
-          <button class="mobile-menu" id="menuButton" type="button" aria-label="メニューを開く">☰</button>
-          <div>
-            <p class="eyebrow" id="todayLabel">あなたのスペース</p>
-            <h1 id="pageTitle">分類</h1>
-          </div>
-        </div>
-        <div class="top-actions">
-          <button class="search-button" id="searchButton" type="button" aria-label="検索">
-            <span aria-hidden="true">⌕</span><span class="search-hint">検索</span><kbd>⌘ K</kbd>
-          </button>
-          <button class="today-button" id="todayButton" type="button">今日</button>
-          <button class="primary-button" id="newEventButton" type="button">＋ <span>新しい予定</span></button>
-        </div>
-      </header>
-
-      <section id="calendarView" class="view" aria-label="カレンダー表示">
-        <div class="calendar-heading">
-          <div class="period-controls">
-            <button class="round-button" id="prevPeriod" type="button" aria-label="前の期間">‹</button>
-            <button class="round-button" id="nextPeriod" type="button" aria-label="次の期間">›</button>
-            <h2 id="periodLabel" aria-live="polite"></h2>
-          </div>
-          <div class="view-switch" role="group" aria-label="表示切替">
-            <button class="selected" type="button" data-mode="month" aria-pressed="true">月</button>
-            <button type="button" data-mode="week" aria-pressed="false">週</button>
-            <button type="button" data-mode="day" aria-pressed="false">日</button>
-          </div>
-        </div>
-
-        <div class="calendar-layout">
-          <section class="calendar-panel" aria-label="カレンダーの日付">
-            <div class="weekday-row" id="weekdayRow">
-              <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
-            </div>
-            <div class="calendar-grid" id="calendarGrid" aria-live="polite"></div>
-          </section>
-
-          <aside class="agenda-panel" aria-label="選択日の予定">
-            <div class="agenda-head">
-              <div><p class="eyebrow">今日の予定</p><h3 id="agendaDate">今日</h3></div>
-              <button class="add-small" id="quickAdd" type="button" aria-label="予定を追加">＋</button>
-            </div>
-            <div id="agendaList" class="agenda-list"></div>
-            <div class="agenda-footer">
-              <span id="agendaCount">予定はありません</span>
-              <button id="agendaAll" type="button">日表示 →</button>
-            </div>
-          </aside>
-        </div>
-
-        <section class="focus-section" aria-labelledby="focusHeading">
-          <div class="section-title">
-            <div><p class="eyebrow">やることを整理</p><h3 id="focusHeading">優先タスク</h3></div>
-            <button class="subtle-link" type="button" data-goto="tasks">すべてのタスク →</button>
-          </div>
-          <div class="focus-card">
-            <div class="focus-progress">
-              <span id="focusProgressText">0 of 0 completed</span>
-              <span id="focusPercent">0%</span>
-            </div>
-            <div class="progress-track" aria-hidden="true"><i id="focusProgress"></i></div>
-            <div id="focusTasks" class="focus-tasks"></div>
-          </div>
-        </section>
-      </section>
-
-      <section id="tasksView" class="view hidden" aria-label="タスク">
-        <div class="page-intro">
-          <div><p class="eyebrow">やるべきことを明確に</p><h2>タスク一覧</h2><p>次にやることを整理しましょう。</p></div>
-          <button class="primary-button" id="newTaskButton" type="button">＋ <span>新しいタスク</span></button>
-        </div>
-        <div class="task-toolbar">
-          <div class="filter-pills" role="group" aria-label="タスクを絞り込む">
-            <button class="selected" type="button" data-filter="all">すべて</button>
-            <button type="button" data-filter="active">未完了</button>
-            <button type="button" data-filter="done">完了</button>
-          </div>
-          <span id="taskSummary"></span>
-        </div>
-        <div class="task-list-card" id="taskList"></div>
-      </section>
-
-      <section id="notesView" class="view hidden" aria-label="メモ">
-        <div class="page-intro">
-          <div><p class="eyebrow">思考をひとつに</p><h2>メモ一覧</h2><p>アイデアや記録を残しましょう。</p></div>
-          <button class="primary-button" id="newNoteButton" type="button">＋ <span>新しいメモ</span></button>
-        </div>
-        <div id="notesList" class="notes-grid"></div>
-      </section>
-
-      <section id="insightsView" class="view hidden" aria-label="分析">
-        <div class="page-intro">
-          <div><p class="eyebrow">活動の振り返り</p><h2>利用状況</h2><p>予定とタスクの状況を確認できます。</p></div>
-        </div>
-        <div class="stats-grid" id="statsGrid"></div>
-        <section class="insight-panel"><h3>今後7日間</h3><div id="weekChart" class="week-chart"></div></section>
-        <section class="insight-panel"><h3>タスクの進捗</h3><div id="taskInsight"></div></section>
-      </section>
-
-      <section id="settingsView" class="view hidden" aria-label="設定">
-        <div class="page-intro">
-          <div><p class="eyebrow">自分に合わせて設定</p><h2>設定</h2><p>表示やデータを管理します。</p></div>
-        </div>
-        <section class="settings-card">
-          <h3>データとバックアップ</h3>
-          <p>予定やタスクはこのブラウザに保存されます。端末の変更やブラウザデータの削除前にバックアップしてください。</p>
-          <div class="settings-actions">
-            <button class="secondary-button" id="exportData" type="button">↓ バックアップを書き出す</button>
-            <label class="secondary-button import-label">↑ バックアップを読み込む<input type="file" id="importData" accept="application/json" hidden></label>
-          </div>
-          <small id="dataStatus">クラウド同期は設定されていません。</small>
-        </section>
-        <section class="settings-card">
-          <h3>表示設定</h3>
-          <label class="preference-row" for="weekStart">週の開始曜日
-            <select id="weekStart"><option value="0">日曜日</option><option value="1">月曜日</option></select>
-          </label>
-        </section>
-      </section>
-    </main>
-  </div>
-
-  <nav class="mobile-nav" aria-label="下部メニュー">
-    <button class="active" type="button" data-view="calendar"><span aria-hidden="true">▦</span>分類</button>
-    <button type="button" data-view="tasks"><span aria-hidden="true">☑</span>タスク</button>
-    <button type="button" data-view="notes"><span aria-hidden="true">▤</span>メモ</button>
-    <button type="button" data-view="insights"><span aria-hidden="true">◫</span>分析</button>
-  </nav>
-
-  <dialog id="eventDialog" class="modal" aria-labelledby="eventDialogタイトル">
-    <form id="eventForm">
-      <div class="modal-head">
-        <div><p class="eyebrow">予定を登録</p><h2 id="eventDialogTitle">新しい予定</h2></div>
-        <button type="button" class="close-button" data-close="eventDialog" aria-label="閉じる">×</button>
-      </div>
-      <label class="field">予定名<input id="eventTitle" placeholder="予定を入力してください" maxlength="100" required></label>
-      <div class="field-grid">
-        <label class="field">日付<input id="eventDate" type="date" required></label>
-        <label class="field">分類<select id="eventCategory"><option>プライベート</option><option>仕事</option><option>その他</option></select></label>
-        <label class="field">開始時刻<input id="eventTime" type="time" value="09:00"></label>
-        <label class="field">終了時刻<input id="eventEndTime" type="time" value="10:00"></label>
-      </div>
-      <label class="field">場所<input id="eventLocation" placeholder="場所を入力（任意）" maxlength="120"></label>
-      <label class="field">メモ<textarea id="eventNotes" rows="3" placeholder="補足があれば入力してください"></textarea></label>
-      <div class="modal-actions">
-        <button type="button" class="text-button danger hidden" id="deleteEvent">予定を削除</button>
-        <button type="button" class="secondary-button" data-close="eventDialog">キャンセル</button>
-        <button class="primary-button" type="submit">予定を保存</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="taskDialog" class="modal" aria-labelledby="taskDialogタイトル">
-    <form id="taskForm">
-      <div class="modal-head">
-        <div><p class="eyebrow">一歩ずつ進める</p><h2 id="taskDialogTitle">新しいタスク</h2></div>
-        <button type="button" class="close-button" data-close="taskDialog" aria-label="Close">×</button>
-      </div>
-      <label class="field">タスク名<input id="taskTitle" placeholder="やることを入力してください" maxlength="120" required></label>
-      <div class="field-grid">
-        <label class="field">期限<input id="taskDate" type="date"></label>
-        <label class="field">優先度<select id="taskPriority"><option value="normal">通常</option><option value="high">高</option><option value="low">低</option></select></label>
-      </div>
-      <label class="field">詳細<textarea id="taskDetails" rows="3"></textarea></label>
-      <div class="modal-actions">
-        <button type="button" class="secondary-button" data-close="taskDialog">キャンセル</button>
-        <button class="primary-button" type="submit">タスクを保存</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="noteDialog" class="modal" aria-labelledby="noteDialogタイトル">
-    <form id="noteForm">
-      <div class="modal-head">
-        <h2 id="noteDialogタイトル">新しいメモ</h2>
-        <button type="button" class="close-button" data-close="noteDialog" aria-label="Close">×</button>
-      </div>
-      <label class="field">タイトル<input id="noteTitle" required></label>
-      <label class="field">メモ内容<textarea id="noteBody" rows="7" required></textarea></label>
-      <div class="modal-actions">
-        <button type="button" class="secondary-button" data-close="noteDialog">キャンセル</button>
-        <button class="primary-button" type="submit">メモを保存</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="searchDialog" class="modal search-modal" aria-labelledby="searchDialogタイトル">
-    <div class="modal-head">
-      <h2 id="searchDialogタイトル">検索</h2>
-      <button type="button" class="close-button" data-close="searchDialog" aria-label="Close">×</button>
-    </div>
-    <input id="searchInput" class="search-input" placeholder="予定・タスク・メモを検索…" autocomplete="off">
-    <div id="searchResults" class="search-results"></div>
-  </dialog>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-</body>
-</html>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<div class="side-top"><a class="brand" href="#" aria-label="folio.calendar"><span class="brand-mark">f.</span><span>folio<span class="brand-dot">.</span>calendar</span></a><button class="icon-btn side-close" id="sideClose" aria-label="閉じる">×</button></div>
+<button class="create-button" id="sideCreate"><span>＋</span>予定を作成</button>
+<p class="side-label">メニュー</p>
+<nav class="side-nav">
+<button class="nav-item active" data-view="calendar"><span class="nav-icon">▦</span>カレンダー</button>
+<button class="nav-item" data-view="tasks"><span class="nav-icon">☑</span>タスク<span class="nav-count" id="taskCount">0</span></button>
+<button class="nav-item" data-view="notes"><span class="nav-icon">▤</span>メモ</button>
+<button class="nav-item" data-view="insights"><span class="nav-icon">◫</span>分析</button>
+</nav>
+<div class="mini-calendar">
+<div class="mini-head"><strong id="miniMonth"></strong><div><button id="miniPrev" aria-label="前の月">‹</button><button id="miniNext" aria-label="次の月">›</button></div></div>
+<div class="mini-week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
+<div class="mini-days" id="miniDays"></div>
+</div>
+<div class="side-categories">
+<p class="side-label">表示するカレンダー</p>
+<label><input type="checkbox" checked data-category="プライベート"><i class="dot personal"></i>プライベート</label>
+<label><input type="checkbox" checked data-category="仕事"><i class="dot work"></i>仕事</label>
+<label><input type="checkbox" checked data-category="その他"><i class="dot other"></i>その他</label>
+</div>
+<button class="settings-link" id="settingsButton"><span>⚙</span>設定</button>
+<div class="side-foot"><i></i>この端末に保存</div>
+</aside>
+<div class="scrim" id="scrim"></div>
+<main class="main">
+<header class="topbar">
+<div class="topbar-left"><button class="icon-btn menu-btn" id="menuButton" aria-label="メニュー">☰</button><div><div class="eyebrow" id="todayLabel">あなたの時間を整える</div><h1 id="pageTitle">カレンダー</h1></div></div>
+<div class="top-actions"><button class="search-btn" id="searchButton"><span>⌕</span><span>検索</span><kbd>⌘ K</kbd></button><button class="today-btn" id="todayButton">今日</button><button class="primary-btn" id="newEventButton">＋ <span>予定を追加</span></button></div>
+</header>
+<section class="view" id="calendarView">
+<div class="calendar-toolbar"><div class="period-nav"><button class="icon-btn" id="prevPeriod" aria-label="前へ">‹</button><button class="icon-btn" id="nextPeriod" aria-label="次へ">›</button><h2 id="periodLabel"></h2></div><div class="view-switch"><button class="selected" data-mode="month">月</button><button data-mode="week">週</button><button data-mode="day">日</button></div></div>
+<div class="calendar-layout">
+<section class="calendar-card"><div class="weekday-row" id="weekdayRow"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div><div class="calendar-grid" id="calendarGrid"></div></section>
+<section class="agenda-card"><div class="section-head"><div><p class="eyebrow">選択した日</p><h3 id="agendaDate">今日</h3></div><button class="icon-btn add-icon" id="quickAdd" aria-label="予定を追加">＋</button></div><div id="agendaList" class="agenda-list"></div><div class="agenda-foot"><span id="agendaCount">0件の予定</span><button id="agendaAll">この日の予定を見る →</button></div></section>
+</div>
+<section class="focus-section"><div class="section-head"><div><p class="eyebrow">今日やること</p><h3>タスクの進捗</h3></div><button class="text-link" data-goto="tasks">すべて見る →</button></div><div class="focus-card"><div class="progress-head"><span id="focusProgressText">0件中0件完了</span><strong id="focusPercent">0%</strong></div><div class="progress-track"><i id="focusProgress"></i></div><div id="focusTasks" class="focus-tasks"></div></div></section>
+</section>
+<section class="view hidden" id="tasksView"><div class="page-intro"><div><p class="eyebrow">やることを整理する</p><h2>タスク</h2><p>優先順位をつけて、一つずつ進めましょう。</p></div><button class="primary-btn" id="newTaskButton">＋ タスクを追加</button></div><div class="task-toolbar"><div class="filter-pills"><button class="selected" data-filter="all">すべて</button><button data-filter="active">未完了</button><button data-filter="done">完了</button></div><span id="taskSummary"></span></div><div id="taskList" class="task-list-card"></div></section>
+<section class="view hidden" id="notesView"><div class="page-intro"><div><p class="eyebrow">アイデアと記録</p><h2>メモ</h2><p>思いついたことを、いつでも残せます。</p></div><button class="primary-btn" id="newNoteButton">＋ メモを作成</button></div><div id="notesList" class="notes-grid"></div></section>
+<section class="view hidden" id="insightsView"><div class="page-intro"><div><p class="eyebrow">振り返り</p><h2>分析</h2><p>予定とタスクの状況を確認できます。</p></div></div><div class="stats-grid" id="statsGrid"></div><section class="insight-card"><h3>今後7日間の予定</h3><div id="weekChart" class="week-chart"></div></section><section class="insight-card"><h3>タスクの達成状況</h3><div id="taskInsight"></div></section></section>
+<section class="view hidden" id="settingsView"><div class="page-intro"><div><p class="eyebrow">アプリを自分好みに</p><h2>設定</h2><p>表示とデータを管理します。</p></div></div><section class="settings-card"><h3>データのバックアップ</h3><p>データはこのブラウザ内に保存されます。端末変更やブラウザデータ削除の前にバックアップしてください。</p><div class="settings-actions"><button class="secondary-btn" id="exportData">↓ バックアップを書き出す</button><label class="secondary-btn import-label">↑ バックアップを読み込む<input type="file" id="importData" accept="application/json" hidden></label></div><small id="dataStatus">クラウド同期は未設定です。</small></section><section class="settings-card"><h3>カレンダー表示</h3><label class="preference-row" for="weekStart">週の開始曜日<select id="weekStart"><option value="0">日曜日</option><option value="1">月曜日</option></select></label></section><section class="settings-card"><h3>データについて</h3><p>予定・タスク・メモは端末内に保存されます。定期的にバックアップを作成してください。</p><button class="text-link danger-link" id="clearData">すべてのデータを削除</button></section></section>
+</main>
+</div>
+<nav class="mobile-nav" aria-label="メインメニュー"><button class="active" data-view="calendar"><span>▦</span>カレンダー</button><button data-view="tasks"><span>☑</span>タスク</button><button data-view="notes"><span>▤</span>メモ</button><button data-view="insights"><span>◫</span>分析</button></nav>
+<dialog id="eventDialog" class="modal"><form id="eventForm"><div class="modal-head"><div><p class="eyebrow">スケジュール</p><h2 id="eventDialogTitle">予定を追加</h2></div><button type="button" class="icon-btn" data-close="eventDialog">×</button></div><label class="field">予定名<input id="eventTitle" maxlength="100" placeholder="例：打ち合わせ" required></label><div class="field-grid"><label class="field">日付<input id="eventDate" type="date" required></label><label class="field">分類<select id="eventCategory"><option>プライベート</option><option>仕事</option><option>その他</option></select></label><label class="field">開始<input id="eventTime" type="time"></label><label class="field">終了<input id="eventEndTime" type="time"></label></div><label class="field">場所<input id="eventLocation" maxlength="120" placeholder="任意"></label><label class="field">メモ<textarea id="eventNotes" rows="3" placeholder="補足"></textarea></label><div class="modal-actions"><button type="button" class="text-link danger-link hidden" id="deleteEvent">削除</button><span class="modal-spacer"></span><button type="button" class="secondary-btn" data-close="eventDialog">キャンセル</button><button type="submit" class="primary-btn">保存する</button></div></form></dialog>
+<dialog id="taskDialog" class="modal"><form id="taskForm"><div class="modal-head"><div><p class="eyebrow">やること</p><h2 id="taskDialogTitle">タスクを追加</h2></div><button type="button" class="icon-btn" data-close="taskDialog">×</button></div><label class="field">タスク名<input id="taskTitle" maxlength="120" placeholder="例：資料を確認する" required></label><div class="field-grid"><label class="field">期限<input id="taskDate" type="date"></label><label class="field">優先度<select id="taskPriority"><option value="high">高</option><option value="normal" selected>通常</option><option value="low">低</option></select></label></div><label class="field">詳細<textarea id="taskDetails" rows="3" placeholder="任意"></textarea></label><div class="modal-actions"><button type="button" class="text-link danger-link hidden" id="deleteTask">削除</button><span class="modal-spacer"></span><button type="button" class="secondary-btn" data-close="taskDialog">キャンセル</button><button type="submit" class="primary-btn">保存する</button></div></form></dialog>
+<dialog id="noteDialog" class="modal"><form id="noteForm"><div class="modal-head"><div><p class="eyebrow">アイデア・記録</p><h2 id="noteDialogTitle">メモを作成</h2></div><button type="button" class="icon-btn" data-close="noteDialog">×</button></div><label class="field">タイトル<input id="noteTitle" maxlength="100" required></label><label class="field">内容<textarea id="noteBody" rows="8" required></textarea></label><div class="modal-actions"><button type="button" class="text-link danger-link hidden" id="deleteNote">削除</button><span class="modal-spacer"></span><button type="button" class="secondary-btn" data-close="noteDialog">キャンセル</button><button type="submit" class="primary-btn">保存する</button></div></form></dialog>
+<dialog id="searchDialog" class="modal search-modal"><div class="modal-head"><div><p class="eyebrow">すばやく見つける</p><h2>検索</h2></div><button class="icon-btn" data-close="searchDialog">×</button></div><input id="searchInput" class="search-input" placeholder="予定・タスク・メモを検索" autocomplete="off"><div id="searchResults" class="search-results"></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>
