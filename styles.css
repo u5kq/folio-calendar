@@ -11,3 +11,9 @@ button,[role="button"]{touch-action:manipulation}
 @media (pointer:coarse){button,[role="button"]{min-height:44px}input,select,textarea{font-size:16px}}
 @media (min-width:761px) and (max-width:1050px){.sidebar{width:224px}.main-content{margin-left:224px}}
 @media (max-width:760px){.app-shell{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
+
+/* FOLIO.CALENDAR DEVICE LAYOUT V2 */
+@media (min-width:761px) and (max-width:1050px){.sidebar{width:218px;padding:22px 15px}.main{margin-left:218px;padding:28px 24px 60px}.calendar-layout{grid-template-columns:minmax(0,1fr) minmax(220px,.72fr);gap:12px}.calendar-day{min-height:74px}}
+@media (max-width:760px){.main{min-width:0}.calendar-layout{grid-template-columns:minmax(0,1fr)}.calendar-toolbar{gap:10px}.top-actions{min-width:0}.calendar-card,.agenda-card{min-width:0}}
+@media (max-width:390px){.topbar h1{font-size:23px}.top-actions{grid-template-columns:minmax(0,1fr) auto}.calendar-day{min-height:49px}.calendar-toolbar .view-switch{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (orientation:landscape) and (max-height:520px) and (max-width:1050px){.main{padding-top:14px}.mobile-nav{left:8px;right:8px}.calendar-layout{grid-template-columns:minmax(0,1.25fr) minmax(200px,.75fr)}}
